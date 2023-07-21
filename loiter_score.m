@@ -1,0 +1,16 @@
+function [out_score, LOCALdatenum, eta_solar, eta_solar_straightup, mid_p, wvec, sunVec, p_eta, p_req, p_res, net_energy,chargerate,...
+    roll, hdg, gspd, Elevation, CL_tf, aoa, mid_zp] = loiter_score(aircraft, direc, loiter_radius, num_points, air_speed, ...
+    wind_speed, wind_from, startLocalDate, timezone, Latitude, Longitude,Altitude, irradiance, ...
+    repeat,mass,TL,powerdrawdata,solarmodel, powertrain_eta,C_L, shape, delta_alt)
+
+% Discretize the circular path into points, (x_p, y_p)
+[x_p, y_p, z_p] = path_circle(direc, loiter_radius, num_points, repeat, shape, delta_alt,Altitude);
+
+% Based on the above path, determine the "score" of the path (how well it
+% does at charging the plane compared to the baseline of a flat solar array
+% on the ground)
+[out_score, LOCALdatenum, eta_solar, eta_solar_straightup, mid_p, wvec, sunVec, p_eta, p_req, p_res, net_energy,chargerate, roll, ...
+    hdg, gspd, Elevation, CL_tf, aoa, mid_zp] = score_path(aircraft, direc, x_p, y_p, air_speed, wind_speed, wind_from, startLocalDate, timezone, ...
+    Latitude, Longitude,Altitude, irradiance,mass,TL,powerdrawdata,solarmodel,powertrain_eta,C_L, z_p);
+
+end

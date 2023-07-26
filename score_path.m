@@ -34,7 +34,7 @@ elseif isnan(C_L) % assuming constant airspeed
         path_to_att(direc, x_p, y_p, air_speed, wind_speed, wind_from, z_p);
 
     % Determine AoA and power required for turning flight
-    [p_req, aoa, CL_tf] = powerdraw_mc4(roll, air_speed, mass,powerdrawdata,powertrain_eta, fp_angle);
+    [p_req, aoa, CL_tf, fp_a] = powerdraw_mc4(roll, air_speed, mass,powerdrawdata,powertrain_eta, fp_angle,gspd);
 
 end
 
@@ -47,13 +47,13 @@ end
 
 if strcmpi(aircraft,'CREATeV')
     % Calculate PV Panel vector based on roll and yaw, assume zero pitch
-    [panelVecA] = attitude_to_panel_vector(paneltiltA, roll, fp_angle+aoa, hdg);
-    [panelVecB] = attitude_to_panel_vector(paneltiltB, roll, fp_angle+aoa, hdg);
+    [panelVecA] = attitude_to_panel_vector(paneltiltA, roll, fp_a+aoa, hdg);
+    [panelVecB] = attitude_to_panel_vector(paneltiltB, roll, fp_a+aoa, hdg);
 elseif strcmpi(aircraft,'George')
     % Calculate PV Panel vector based on roll and yaw, assume zero pitch
-    [panelVecA] = attitude_to_panel_vector(paneltiltA, roll, fp_angle+aoa, hdg);
-    [panelVecB] = attitude_to_panel_vector(paneltiltB, roll, fp_angle+aoa, hdg);
-    [panelVecC] = attitude_to_panel_vector(paneltiltC, roll, fp_angle+aoa, hdg);
+    [panelVecA] = attitude_to_panel_vector(paneltiltA, roll, fp_a+aoa, hdg);
+    [panelVecB] = attitude_to_panel_vector(paneltiltB, roll, fp_a+aoa, hdg);
+    [panelVecC] = attitude_to_panel_vector(paneltiltC, roll, fp_a+aoa, hdg);
 end
 
 % Prepare Time Vectors
